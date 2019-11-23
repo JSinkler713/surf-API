@@ -48,6 +48,21 @@ app.get('/api/beaches', (req, res) => {
   });
 });
 
+//write route to see a specific beach by name
+app.get('/api/beaches/:id', (req, res) => {
+  const beachId = req.params.id;
+  const getByName = `SELECT * FROM beaches WHERE beaches.oid = ? `
+  database.all(getByName, [beachId], (error, rows)=> {
+    if (error) {
+      console.log("Couldn't get by name", error);
+      res.sendStatus(500);
+    }
+    else {
+      console.log("Here it is");
+      res.status(200).json(rows);
+    }
+  });
+});
 
 
 app.listen(9000);
