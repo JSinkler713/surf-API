@@ -11,8 +11,6 @@ app.get('/', (req, res)=> {
   res.send('use /api/beaches to access all beaches');
 });
 
-//write first route to look at table beaches
-
 
 
 //write route to add to table beaches
@@ -63,6 +61,32 @@ app.get('/api/beaches/:id', (req, res) => {
     }
   });
 });
+
+//write route to update a specific beach
+app.put('/api/beaches/:id', (req, res) => {
+  const beachId = req.params.id;
+  const queryHelp = Object.keys(req.body).map(element => `${ element.toUpperCase() } = ?`);
+  const updateBeachStatement = `UPDATE beaches SET ${queryHelp.join(', ')} WHERE beaches.oid = ?`;
+  //add values from req.body and beachId to array for db run
+  const queryValue = [...Object.values(req.body), beachId];
+
+  database.run(updateBeachStatement, queryValue, function(error, result) {
+    if (error) {
+      console.log("error, could not update book", error);
+      res.sendStatus(500);
+    }
+    else {
+      console.log(`updated beach with id ${beachId} successfully`)
+      res.sendStatus(200);
+    }
+  });
+});
+
+//write route to delete a specific beach
+
+
+
+
 
 
 app.listen(9000);
