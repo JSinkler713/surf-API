@@ -83,6 +83,21 @@ app.put('/api/beaches/:id', (req, res) => {
 });
 
 //write route to delete a specific beach
+app.delete('/api/beaches/:id', (req, res) => {
+  const deleteStatement = `DELETE FROM beaches WHERE beaches.oid = ?`
+  let beachId = req.params.id;
+
+  database.run(deleteStatement, beachId, (error) => {
+    if(error) {
+      console.log("couldn't delete beach", error);
+      res.sendStatus(500);
+    }
+    else {
+      console.log("Success deleting beach");
+      res.sendStatus(200);
+    }
+  });
+});
 
 
 
