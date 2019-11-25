@@ -13,5 +13,12 @@ database.run(createTableBeachesQuery, (error) => {
   else console.log("Success created Beaches Table");
 });
 
+const createTableBoardTypesQuery = "CREATE TABLE IF NOT EXISTS boardTypes (name TEXT, description TEXT)";
+
+database.run(createTableBoardTypesQuery, (error) => {
+  if (error) console.log("couldn't create BoardTypes table", error);
+  else console.log("created boardTypes table");
+}); 
+
 
 module.exports = database;

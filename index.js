@@ -100,8 +100,33 @@ app.delete('/api/beaches/:id', (req, res) => {
 });
 
 
+/////////////////
+// BoardTypes Table
+//////////////////
+// Only two routes to see types and add type
 
+app.get('/api/boardtypes', (req, res) => {
+  const getStatement = `SELECT * FROM boardTypes`
+  
+  database.all(getStatement, (error, rows) => {
+    if(error) {
+      console.log("couldn't get board types");
+      res.sendStatus(500);
+    }
+    else {
+      res.status(200).json(rows);
+    }
+  });
+});
 
+app.post('/api/boardtypes', (req, res) => {
+  let createNewBoardTypeStatement = `INSERT INTO boardTypes VALUES (?, ?)`;
+  let reqBody = [req.body.name, req.body.description];
 
+  database.all(createNewBoardTypeStatement, reqBody, (error, row)=> {
+    if(error) res.sendStatus(500);
+    else res.status(200).json(row);
+  });
+});
 
 app.listen(9000);
