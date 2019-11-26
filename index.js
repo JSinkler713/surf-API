@@ -162,5 +162,67 @@ app.get('/api/boards', (req, res) => {
   });
 }); 
 
+////////////////
+// JOIN table Requests
+///////////////////
+
+app.get('/api/beaches_boardTypes', (req, res) => {
+  let getAllBoards = 'SELECT * FROM beaches_boardTypes';
+  database.all(getAllBoards, (error, results) => {
+    if(error) {
+      console.log("couldn't get JOIN table", error);
+      res.sendStatus(500);
+    }
+    else {
+      console.log("here are the beaches_boardTypes");
+      res.status(200).json(results);
+    }
+  });
+}); 
+
+app.post('/api/beaches_boardTypes', (req, res) => {
+  let createNewBoard = 'INSERT INTO beaches_boardTypes VALUES (?, ?)'
+  let reqBody = [req.body.beaches_id, req.body.boardTypes_id];
+  database.run(createNewBoard, reqBody, (error)=> {
+    if(error) {
+      console.log("couldn't create new beaches to boardtype relationship", error);
+      res.sendStatus(500);
+    }
+    else {
+      console.log(`New beaches to boardTypes relationship has been inserted`);
+      res.sendStatus(200);
+    }
+  });
+});
+
+/////////////
+// Routes with JOINs
+//////////
+app.get('/api/beaches/:id/boards', (req, res) => {
+  let boardId = parseInt(req.params.id);
+  let requestStatement = `
+SELECT beaches.name, boards.name, boards.description
+FROM beaches JOIN beaches_boardTypes ON
+beaches.oid = beaches_boardTypes.beaches_id
+JOIN boards ON
+beaches_boardTypes.boardTypes_id = boards.oid
+WHERE beaches.oid = (?)
+`
+  database.all(requestStatement, [boardId], (error, results) => {
+    if(error) {
+      console.log("couldn't get any boards for that beach", error);
+      res.sendStatus(500);
+    }
+    else {
+      console.log("success");
+      res.status(200).json(results);
+    }
+  });
+});
+
+
+
+
+
 
 app.listen(9000);

@@ -55,7 +55,7 @@ db.serialize(()=> {
     if (error) console.log(new Error('Could not delete beaches'), error);
     else console.log("couldn't delete beaches");
   });
-   beaches_list.forEach(beach => {
+  beaches_list.forEach(beach => {
     db.run(insertIntoBeaches, [beach.name, beach.description], error => {
       if (error) console.log(new Error('Could not add beaches'), error);
       else {
