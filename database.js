@@ -26,11 +26,23 @@ database.run(createTableBoardTypesQuery, (error) => {
 /////////////////
 // Create boards table
 //////////////////
- const createTableBoardsQuery = "CREATE TABLE IF NOT EXISTS boards (name TEXT, description TEXT, boardType_id INTEGER)"    ;
+ const createTableBoardsQuery = "CREATE TABLE IF NOT EXISTS boards (name TEXT, description TEXT, boardType_id INTEGER)";
   
-  database.run(createTableBoardsQuery, (error) => {
+database.run(createTableBoardsQuery, (error) => {
   if (error) console.log("couldn't create Boards table", error);
   else console.log("created boards table");
 }); 
+
+////////////////
+// Create beaches_boardTypes JOIN table
+////////////////
+const createBeaches_boardTypesStatement = "CREATE TABLE IF NOT EXISTS beaches_boardTypes (beaches_id INTEGER, boardTypes_id INTEGER)";
+
+database.run(createBeaches_boardTypesStatement, (error) => {
+  if (error) console.log("Couldn't create JOIN table", error);
+  else console.log("made JOIN table");
+});
+
+
 
 module.exports = database;
