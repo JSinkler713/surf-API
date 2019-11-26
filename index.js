@@ -206,7 +206,7 @@ SELECT beaches.name AS Beach, boards.name, boards.description
 FROM beaches JOIN beaches_boardTypes ON
 beaches.oid = beaches_boardTypes.beaches_id
 JOIN boards ON
-beaches_boardTypes.boardTypes_id = boards.oid
+beaches_boardTypes.boardTypes_id = boards.boardType_id
 WHERE beaches.oid = (?)
 `
   database.all(requestStatement, [beachesId], (error, results) => {
@@ -228,7 +228,7 @@ SELECT boards.name AS BoardName, boards.description, beaches.name AS Beach
 FROM beaches JOIN beaches_boardTypes ON
 beaches.oid = beaches_boardTypes.beaches_id
 JOIN boards ON
-beaches_boardTypes.boardTypes_id = boards.oid
+beaches_boardTypes.boardTypes_id = boards.boardType_id
 WHERE boards.oid = (?)
 `
   database.all(requestStatement, [boardId], (error, results) => {
