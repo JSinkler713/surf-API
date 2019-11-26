@@ -12,6 +12,18 @@ const beaches_list = [
     {
         "name": "Byron Bay",
         "description": "Beach in Australia, baby waves, lots of cruise time."
+    },
+    {
+        "name": "Bolinas",
+        "description": "A popular longboarding wave. Bring a big board to catch the little crumbly waves here. Good luck finding parking on the weekend."
+    },
+    {
+        "name": "Poipu",
+        "description": "Close to shore beachbreak located in Northern California. Dumpy shorepound, good on a South Swell."
+    },
+    {
+        "name": "Byron Bay",
+        "description": "Beach in Australia, baby waves, lots of cruise time."
     }
 ];
 
@@ -93,5 +105,4 @@ db.serialize(()=> {
     }); 
   });
 });
-
 

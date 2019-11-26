@@ -198,8 +198,9 @@ app.post('/api/beaches_boardTypes', (req, res) => {
 /////////////
 // Routes with JOINs
 //////////
+//Route to get all boards for a specific beach
 app.get('/api/beaches/:id/boards', (req, res) => {
-  let boardId = parseInt(req.params.id);
+  let beachesId = parseInt(req.params.id);
   let requestStatement = `
 SELECT beaches.name AS Beach, boards.name, boards.description
 FROM beaches JOIN beaches_boardTypes ON
@@ -207,6 +208,28 @@ beaches.oid = beaches_boardTypes.beaches_id
 JOIN boards ON
 beaches_boardTypes.boardTypes_id = boards.oid
 WHERE beaches.oid = (?)
+`
+  database.all(requestStatement, [beachesId], (error, results) => {
+    if(error) {
+      console.log("couldn't get any boards for that beach", error);
+      res.sendStatus(500);
+    }
+    else {
+      console.log("success");
+      res.status(200).json(results);
+    }
+  });
+});
+// Other way around, given a specific board, get all beaches to surf at with it
+app.get('/api/boards/:id/beaches', (req, res) => {
+  let boardId = parseInt(req.params.id);
+  let requestStatement = `
+SELECT boards.name AS BoardName, boards.description, beaches.name AS Beach
+FROM beaches JOIN beaches_boardTypes ON
+beaches.oid = beaches_boardTypes.beaches_id
+JOIN boards ON
+beaches_boardTypes.boardTypes_id = boards.oid
+WHERE boards.oid = (?)
 `
   database.all(requestStatement, [boardId], (error, results) => {
     if(error) {
