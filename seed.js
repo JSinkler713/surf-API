@@ -47,53 +47,52 @@ const boards_list = [
     }
 ];
 
+db.serialize(()=> {
+  const deleteBeaches = 'DELETE FROM beaches';
+  const insertIntoBeaches = 'INSERT INTO beaches (name, description) VALUES (?, ?)';
 
-const deleteBeaches = 'DELETE FROM beaches';
-const deleteBoardTypes = 'DELETE FROM boardTypes';
-const deleteBoards = 'DELETE FROM boards';
-const insertIntoBeaches = 'INSERT INTO beaches (name, description) VALUES (?, ?)';
-//was authors
-const insertIntoBoardTypes = 'INSERT INTO boardTypes (name, description) VALUES (?, ?)';
-//was books
-const insertIntoBoards = 'INSERT INTO boards (name, description, boardType_id) VALUES (?, ?, ?)';
-//was categories
-db.run(deleteBeaches, error => {
-  if (error) console.log(new Error('Could not delete beaches'), error);
-  else {
-    beaches_list.forEach(beach => {
-      db.run(insertIntoBeaches, [beach.name, beach.description], error => {
-        if (error) console.log(new Error('Could not add beaches'), error);
-        else {
-          console.log(`${beach.name} successfully added to the database!`);
-        }
+  db.run(deleteBeaches, error => {
+    if (error) console.log(new Error('Could not delete beaches'), error);
+    else {
+      beaches_list.forEach(beach => {
+        db.run(insertIntoBeaches, [beach.name, beach.description], error => {
+         if (error) console.log(new Error('Could not add beaches'), error);
+         else {
+            console.log(`${beach.name} successfully added to the database!`);
+         }
+        });
       });
-    });
-    db.run(deleteBoardTypes, error => {
-      if (error) console.log(new Error('Could not delete boardTypes'), error);
-      else {
-        boardTypes_list.forEach(boardType => {
-          db.run(insertIntoBoardTypes, [boardType.name, boardType.description], error => {
-            if (error) console.log(new Error('Could not add boardtypes'), error);
-            else {
-              console.log(`${boardType.name} successfully added to the database!`);
-            }
-          });
-        });
-        db.run(deleteBoards, error => {
-          if (error) console.log(new Error('Could not delete boards'), error);
-          else {
-            boards_list.forEach(board => {
-              db.run(insertIntoBoards, [board.name, board.description, board.boardType_id], error => {
-                if (error) console.log(new Error('Could not add board'), error);
-                else {
-                  console.log(`${board.name} successfully added to the database!`);
-                }
-              });
-            });
-          }
-        });
-      }
+    }
+  });
+
+ const deleteBoardTypes = 'DELETE FROM boardTypes';
+ const insertIntoBoardTypes = 'INSERT INTO boardTypes (name, description) VALUES (?, ?)';
+ db.run(deleteBoardTypes, error => {
+    if (error) console.log(new Error('Could not delete boardTypes'), error);
+    else { console.log("deleted boardtypes")}
+ });
+ boardTypes_list.forEach(boardType => {
+   db.run(insertIntoBoardTypes, [boardType.name, boardType.description], error => {
+     if (error) console.log(new Error('Could not add boardtypes'), error);
+     else {
+       console.log(`${boardType.name} successfully added to the database!`);
+     }
+   });
+ })
+const deleteBoards = 'DELETE FROM boards';
+const insertIntoBoards = 'INSERT INTO boards (name, description, boardType_id) VALUES (?, ?, ?)';
+db.run(deleteBoards, error => {
+  if (error) console.log(new Error('Could not delete boards'), error);
+  else { 
+    boards_list.forEach(board => {
+      db.run(insertIntoBoards, [board.name, board.description, board.boardType_id], error => {
+        if (error) console.log(new Error('Could not add board'), error);
+        else {
+          console.log(`${board.name} successfully added to the database!`); 
+        }
+      }); 
     });
   }
+});
 });
 
