@@ -129,4 +129,38 @@ app.post('/api/boardtypes', (req, res) => {
   });
 });
 
+
+/////////////////
+// Boards Routes
+////////////////
+app.post('/api/boards', (req, res) => {
+  let createNewBoard = 'INSERT INTO boards VALUES (?, ?, ?)'
+  let reqBody = [req.body.name, req.body.description, req.body.boardType_id];
+  database.run(createNewBoard, reqBody, (error)=> {
+    if(error) {
+      console.log("couldn't create new board", error);
+      res.sendStatus(500);
+    }
+    else {
+      console.log(`New board ${req.body.name}, has been inserted`);
+      res.sendStatus(200);
+    }
+  });
+});
+
+app.get('/api/boards', (req, res) => {
+  let getAllBoards = 'SELECT * FROM boards';
+  database.all(getAllBoards, (error, results) => {
+    if(error) {
+      console.log("couldn't get boards", error);
+      res.sendStatus(500);
+    }
+    else {
+      console.log("here are the beaches");
+      res.status(200).json(results);
+    }
+  });
+}); 
+
+
 app.listen(9000);
