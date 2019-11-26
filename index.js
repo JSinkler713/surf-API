@@ -201,7 +201,7 @@ app.post('/api/beaches_boardTypes', (req, res) => {
 app.get('/api/beaches/:id/boards', (req, res) => {
   let boardId = parseInt(req.params.id);
   let requestStatement = `
-SELECT beaches.name, boards.name, boards.description
+SELECT beaches.name AS Beach, boards.name, boards.description
 FROM beaches JOIN beaches_boardTypes ON
 beaches.oid = beaches_boardTypes.beaches_id
 JOIN boards ON
