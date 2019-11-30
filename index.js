@@ -104,7 +104,6 @@ app.delete('/api/beaches/:id', (req, res) => {
 // BoardTypes Table
 //////////////////
 // Only two routes to see types and add type
-
 app.get('/api/boardtypes', (req, res) => {
   const getStatement = `SELECT * FROM boardTypes`
   
@@ -118,7 +117,21 @@ app.get('/api/boardtypes', (req, res) => {
     }
   });
 });
-
+//get a specific boardtype
+app.get('/api/boardtypes/:id', (req, res) => {
+  const boardTypeId = req.params.id
+  const getStatement = `SELECT *, rowId AS OID FROM boardTypes WHERE boardtypes.oid = ${boardTypeId}`
+  database.all(getStatement, (error, row) => {
+    if(error) {
+      console.log("couldn't get board types", error);
+      res.sendStatus(500);
+    }
+    else {
+      res.status(200).json(row);
+    }
+  });
+})
+//post a boardtype
 app.post('/api/boardtypes', (req, res) => {
   let createNewBoardTypeStatement = `INSERT INTO boardTypes VALUES (?, ?)`;
   let reqBody = [req.body.name, req.body.description];
@@ -128,6 +141,53 @@ app.post('/api/boardtypes', (req, res) => {
     else res.status(200).json(row);
   });
 });
+
+//update a boardtype
+app.put('/api/boardtypes/:id', (req, res) => {
+  const boardtypesId = req.params.id;
+  const queryHelp = Object.keys(req.body).map(element => `${ element.toUpperCase() } = ?`);
+  const updateBoardtypesStatement = `UPDATE boardtypes SET ${queryHelp.join(', ')} WHERE boardtypes.oid = ?`;
+  //add values from req.body and beachId to array for db run
+  const queryValue = [...Object.values(req.body), boardtypesId];
+
+	database.run(updateBoardtypesStatement, queryValue, function(error, result) {
+    if (error) {
+      console.log("error, could not update book", error);
+      res.sendStatus(500);
+    }
+    else {
+      console.log(`updated boardtypes with id ${boardtypesId} successfully`)
+      res.sendStatus(200);
+    }
+  });
+});
+
+//delete a boardtype
+
+app.delete('/api/boardtypes/:id', (req, res) => {
+  const deleteStatement = `DELETE FROM boardtypes WHERE boardtypes.oid = ?`
+  let boardtypesId = req.params.id;
+
+  database.run(deleteStatement, boardtypesId, (error) => {
+    if(error) {
+      console.log("couldn't delete boardtype", error);
+      res.sendStatus(500);
+    }
+    else {
+      console.log("Success deleting boardtype");
+      res.sendStatus(200);
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
 
 
 /////////////////
@@ -202,7 +262,7 @@ app.post('/api/beaches_boardTypes', (req, res) => {
 app.get('/api/beaches/:id/boards', (req, res) => {
   let beachesId = parseInt(req.params.id);
   let requestStatement = `
-SELECT beaches.name AS Beach, boards.name, boards.description
+SELECT beaches.name AS Beach, boards.name AS BoardName, boards.description
 FROM beaches JOIN beaches_boardTypes ON
 beaches.oid = beaches_boardTypes.beaches_id
 JOIN boards ON
@@ -224,9 +284,11 @@ WHERE beaches.oid = (?)
 app.get('/api/boards/:id/beaches', (req, res) => {
   let boardId = parseInt(req.params.id);
   let requestStatement = `
-SELECT boards.name AS BoardName, boards.description, beaches.name AS Beach
+SELECT boards.name AS BoardName, boards.description, boardTypes.name AS BoardType, beaches.name AS Beach
 FROM beaches JOIN beaches_boardTypes ON
 beaches.oid = beaches_boardTypes.beaches_id
+JOIN boardTypes ON
+boardTypes.oid = beaches_boardTypes.boardTypes_id
 JOIN boards ON
 beaches_boardTypes.boardTypes_id = boards.boardType_id
 WHERE boards.oid = (?)
