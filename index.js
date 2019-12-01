@@ -16,16 +16,17 @@ app.get('/', (req, res)=> {
 //write route to add to table beaches
 app.post('/api/beaches', (req, res) => {
   let createNewBeachStatement = `INSERT INTO beaches VALUES (?, ?)`;
+  let beachName = req.body.name;
   let reqBody = [req.body.name, req.body.description];
   
-  database.run(createNewBeachStatement, reqBody, (error, result) => {
+  database.run(createNewBeachStatement, reqBody, (error) => {
     if (error) {
       console.log("error making new beach", error);
       res.sendStatus(500);
     }
     else {
-      console.log(`you added a new beach, ${req.body.name}`)
-      res.status(200).json(result);
+      console.log(`you added a new beach`)
+      res.sendStatus(200);
     }
   });
 });
