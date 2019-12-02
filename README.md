@@ -4,8 +4,8 @@
 
 ###Tables in the SurfAPI database
 
-Name | Lunch order | Spicy      | Owes
+Beaches | beaches_boardTypes | boardTypes | boards
 ------- | ---------------- | ---------- | ---------:
-Joan  | saag paneer | medium | $11
-Sally  | vindaloo        | mild       | $14
-Erin   | lamb madras | HOT      | $5
+name  | beaches_id | name | name
+description  | boardTypes_id | description  | description
+       |        |       | boardTypes_id
