@@ -12,6 +12,7 @@ description  | boardTypes_id | description  | description
 
 ---
 ### Overview of operations avaliable
+
 The Beaches, boardTypes, and boards tables all have full CRUD operation availabe. The beaches_boardTypes JOIN table is only updated when new beaches are created. In order to pass in data as part of the request, the user should use JSON in the request body. The only other way to pass in data with a request is through an id in the route target. Here are some sample routes which would also work with *boardTypes* or *boards* in the place of *beaches*.
 ---
 ### Route targets and example responses
