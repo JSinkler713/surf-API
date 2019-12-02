@@ -1,6 +1,6 @@
 ## Surf API
 
-![image of Entity Relationship Diagram](media/SurfAPI.pdf)
+![image of Entity Relationship Diagram](media/surferd.png)
 
 ### Tables in the SurfAPI database
 
