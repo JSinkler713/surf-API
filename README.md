@@ -11,14 +11,11 @@ description  | boardTypes_id | description  | description
 (empty)    | (empty)    | (empty)     | boardTypes_id
 
 
-###Overview of operations avaliable
-The Beaches, boardTypes, and boards tables all have full CRUD operation availabe. The beaches_boardTypes JOIN table is only updated when new beaches are created. In order to pass in data as part of the request, the user should use JSON in the request body. The only other way to pass in data with a request is through an id in the route target. Example where the board that we want to get has id 3.
-```
- http:localhost3000/api/boards/3
-```
+### Overview of operations avaliable
+The Beaches, boardTypes, and boards tables all have full CRUD operation availabe. The beaches_boardTypes JOIN table is only updated when new beaches are created. In order to pass in data as part of the request, the user should use JSON in the request body. The only other way to pass in data with a request is through an id in the route target. Here are some sample routes which would also work with *boardTypes* or *boards* in the place of *beaches*.
 
 ### Route targets and example responses
-To get all beaches send a GET request to
+*_To get all beaches_*
 ```
 request: GET
 target:	/api/beaches
@@ -36,7 +33,7 @@ Response:
 	 .....full list of beaches
 ```
 
-To get a specific beach pass in the beach ID like follows
+*_To get a specific beach_*
 ```
 request: GET	
 target: /api/beaches/3   (where 3 is the beachid)
@@ -50,12 +47,12 @@ This should return an array containing the data as a JSON object
     }
 ]
 ```
-To delete a beach select the same target but using a DELETE request
+*_To delete a beach_*
 ```
 request: DELETE	
 target: /api/beaches/3
 ```
-To update a beach select a target by id and pass in the column wanted to change. In the following, I change the beach name
+*_To update a beach_* select a target by id and pass in the column wanted to change. In the following, I change the beach name
 ```
 JSON BODY
 {
@@ -64,7 +61,7 @@ JSON BODY
 request:PUT
 target: /api/beaches/3
 ```
-#### associating a beach to boardTypes while creating a new beach
+#### Associate a beach to multiple boardTypes while creating a new beach
 Not every surf spot supports all boards. For this reason, when updating a beach it is advised to pass in which boardtypes will work well as the new beach. To create a new beach with an association already, your json body that you pass in as a request will need to have an array of boardtype_ids it is accociated with.
 
 To create a new beach that is accommodating to longboards(1) and fish(3) boardtypes I would send a request as follows
@@ -82,7 +79,7 @@ target: /api/beaches
 ### Useful Routes
 Some useful routes to figure out which board you want to bring to the beach. Or likewise which beach you want to go to to surf a particular board are as follows
 
-To get all boards good for beach number 3(Byron Bay)
+*_To get all boards associated with beach.oid = 3(Byron Bay)_*
 ```
 request:GET
 target:api/beaches/3/boards
@@ -99,7 +96,7 @@ RESPONSE:
         "description": "Classic longboard cruiser. Catches everything. 9'6"
     },
 ```
-To get all beaches good for board number 1 (Stewart Cruiser)
+*_To get all beaches good for board.oid = 1 (Stewart Cruiser)_*
 ```
 request:GET
 target:api/boards/1/beaches
