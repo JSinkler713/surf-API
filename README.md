@@ -8,4 +8,4 @@ Beaches | beaches_boardTypes | boardTypes | boards
 ------- | ---------------- | ---------- | ---------:
 name  | beaches_id | name | name
 description  | boardTypes_id | description  | description
-       |        |       | boardTypes_id
+(empty)    | (empty)    | (empty)     | boardTypes_id
