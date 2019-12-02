@@ -20,7 +20,7 @@ The Beaches, boardTypes, and boards tables all have full CRUD operation availabe
 request: GET
 target:	/api/beaches
 ```
-Response:
+*Sample response:*
 ```
     {
         "name": "OB",
@@ -38,7 +38,7 @@ Response:
 request: GET	
 target: /api/beaches/3   (where 3 is the beachid)
 ```
-This should return an array containing the data as a JSON object
+*Sample response:*
 ```
 [
     {
@@ -84,7 +84,7 @@ Some useful routes to figure out which board you want to bring to the beach. Or 
 request:GET
 target:api/beaches/3/boards
 
-RESPONSE:
+*Sample response:*
     {
         "Beach": "Byron Bay",
         "BoardName": "Big Red",
@@ -101,7 +101,7 @@ RESPONSE:
 request:GET
 target:api/boards/1/beaches
 
-RESPONSE:
+*Sample response:*
     {
         "BoardName": "Stewart Cruiser",
         "description": "Classic longboard cruiser. Catches everything. 9'6",
@@ -114,3 +114,6 @@ RESPONSE:
         "BoardType": "longboard",
         "Beach": "Bolinas"
     },
+```
+### Future goals
+Ideally the boards used at a specific breach would change given the expected wave size at that beach. Some research is being conducted on using the national weather service api for swell data in order to dynamically change board recomendations.
