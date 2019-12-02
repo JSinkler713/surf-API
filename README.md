@@ -1,7 +1,7 @@
 ## Surf API
 
 ![image of Entity Relationship Diagram](media/surferd.png)
-
+---
 ### Tables in the SurfAPI database
 
 Beaches | beaches_boardTypes | boardTypes | boards
@@ -10,10 +10,10 @@ name  | beaches_id | name | name
 description  | boardTypes_id | description  | description
 (empty)    | (empty)    | (empty)     | boardTypes_id
 
-
+---
 ### Overview of operations avaliable
 The Beaches, boardTypes, and boards tables all have full CRUD operation availabe. The beaches_boardTypes JOIN table is only updated when new beaches are created. In order to pass in data as part of the request, the user should use JSON in the request body. The only other way to pass in data with a request is through an id in the route target. Here are some sample routes which would also work with *boardTypes* or *boards* in the place of *beaches*.
-
+---
 ### Route targets and example responses
 *_To get all beaches_*
 ```
@@ -61,6 +61,7 @@ JSON BODY
 request:PUT
 target: /api/beaches/3
 ```
+---
 #### Associate a beach to multiple boardTypes while creating a new beach
 Not every surf spot supports all boards. For this reason, when updating a beach it is advised to pass in which boardtypes will work well as the new beach. To create a new beach with an association already, your json body that you pass in as a request will need to have an array of boardtype_ids it is accociated with.
 
@@ -76,6 +77,7 @@ JSON BODY
 request: POST
 target: /api/beaches
 ```
+---
 ### Useful Routes
 Some useful routes to figure out which board you want to bring to the beach. Or likewise which beach you want to go to to surf a particular board are as follows
 
@@ -103,6 +105,7 @@ request:GET
 target:api/boards/1/beaches
 ```
 **Sample response:**
+```
     {
         "BoardName": "Stewart Cruiser",
         "description": "Classic longboard cruiser. Catches everything. 9'6",
