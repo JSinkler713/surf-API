@@ -1,6 +1,6 @@
 ## Surf API
 
-![image of Entity Relationship Diagram](https://github.com/JSinkler713/surf-API/blob/master/SurfAPI.pdf)
+![image of Entity Relationship Diagram](media/SurfAPI.pdf)
 
 ### Tables in the SurfAPI database
 
@@ -72,8 +72,8 @@ To create a new beach that is accommodating to longboards(1) and fish(3) boardty
 ```
 JSON BODY
 {
-	"name": "The best shortboard and fish beach",
-	"description": "Beach covered in tomatoes",
+	"name": "LongFish beach",
+	"description": "Great surfspot. Hardly any localism. Except for the Great Whites.",
 	"boardTypeIds": [1, 3]
 }
 request: POST
