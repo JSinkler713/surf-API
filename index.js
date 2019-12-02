@@ -15,21 +15,48 @@ app.get('/', (req, res)=> {
 
 //write route to add to table beaches
 app.post('/api/beaches', (req, res) => {
-  let createNewBeachStatement = `INSERT INTO beaches VALUES (?, ?)`;
+  const createNewBeachStatement = `INSERT INTO beaches VALUES (?, ?)`;
   let beachName = req.body.name;
   let reqBody = [req.body.name, req.body.description];
-  
-  database.run(createNewBeachStatement, reqBody, (error) => {
+  // get array for second database update
+  let boardTypeIDs = req.body.boardTypeIds
+  console.log(boardTypeIDs);
+
+
+  database.run(createNewBeachStatement, reqBody, function(error) {
     if (error) {
       console.log("error making new beach", error);
       res.sendStatus(500);
     }
     else {
       console.log(`you added a new beach`)
-      res.sendStatus(200);
+      const createNewJoinRow = `INSERT INTO beaches_boardTypes VALUES (?, ?)`;
+      for (let boardTypeId of boardTypeIDs) {
+        console.log(boardTypeId);
+        database.run(createNewJoinRow, [this.lastID, boardTypeId], (error) => {
+          if (error) {
+            console.log("error making new beach", error);
+            res.sendStatus(500);
+          }
+          else {
+            console.log(`you added to the JOIN table`)
+          }
+        });
+      }
+      console.log(this.lastID);
+      //res.sendStatus(200);
+      res.json(this.lastID);
     }
   });
 });
+
+
+
+
+
+
+
+
 
 //write route to see all beaches
 app.get('/api/beaches', (req, res) => {
