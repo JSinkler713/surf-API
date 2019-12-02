@@ -20,7 +20,7 @@ The Beaches, boardTypes, and boards tables all have full CRUD operation availabe
 request: GET
 target:	/api/beaches
 ```
-*Sample response:*
+**Sample response:**
 ```
     {
         "name": "OB",
@@ -38,7 +38,7 @@ target:	/api/beaches
 request: GET	
 target: /api/beaches/3   (where 3 is the beachid)
 ```
-*Sample response:*
+**Sample response:**
 ```
 [
     {
@@ -83,8 +83,9 @@ Some useful routes to figure out which board you want to bring to the beach. Or 
 ```
 request:GET
 target:api/beaches/3/boards
-
-*Sample response:*
+```
+**Sample response:**
+```
     {
         "Beach": "Byron Bay",
         "BoardName": "Big Red",
@@ -100,8 +101,8 @@ target:api/beaches/3/boards
 ```
 request:GET
 target:api/boards/1/beaches
-
-*Sample response:*
+```
+**Sample response:**
     {
         "BoardName": "Stewart Cruiser",
         "description": "Classic longboard cruiser. Catches everything. 9'6",
