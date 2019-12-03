@@ -59,7 +59,7 @@ JSON BODY
 {
    "name": "Bye Ron Bay"
 }
-request:PUT
+request: PUT
 target: /api/beaches/3
 ```
 ---
@@ -84,8 +84,8 @@ Some useful routes to figure out which board you want to bring to the beach. Or 
 
 *_To get all boards associated with beach.oid = 3(Byron Bay)_*
 ```
-request:GET
-target:api/beaches/3/boards
+request: GET
+target: api/beaches/3/boards
 ```
 **Sample response:**
 ```
@@ -102,8 +102,8 @@ target:api/beaches/3/boards
 ```
 *_To get all beaches good for board.oid = 1 (Stewart Cruiser)_*
 ```
-request:GET
-target:api/boards/1/beaches
+request: GET
+target: api/boards/1/beaches
 ```
 **Sample response:**
 ```
