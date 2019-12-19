@@ -67,7 +67,7 @@ app.post('/api/beaches', (req, res) => {
 
 //write route to see all beaches
 app.get('/api/beaches', (req, res) => {
-  const getAllBeaches = 'SELECT * FROM beaches';
+  const getAllBeaches = 'SELECT beaches.oid, * FROM beaches';
 
   database.all(getAllBeaches, (error, rows)=> {
     if (error) {
@@ -84,7 +84,7 @@ app.get('/api/beaches', (req, res) => {
 //write route to see a specific beach by name
 app.get('/api/beaches/:id', (req, res) => {
   const beachId = req.params.id;
-  const getByName = `SELECT * FROM beaches WHERE beaches.oid = ? `
+  const getByName = `SELECT beaches.oid, * FROM beaches WHERE beaches.oid = ? `
   database.all(getByName, [beachId], (error, rows)=> {
     if (error) {
       console.log("Couldn't get by name", error);
@@ -352,6 +352,14 @@ app.post('/api/beaches_boardTypes', (req, res) => {
 // Routes with JOINs
 //////////
 //Route to get all boards for a specific beach
+
+
+
+
+
+
+
+
 app.get('/api/beaches/:id/boards', (req, res) => {
   let beachesId = parseInt(req.params.id);
   let requestStatement = `
@@ -398,6 +406,29 @@ WHERE boards.oid = (?)
   });
 });
 
+
+//get all boardtypes for a specificbeach
+app.get('/api/beaches/:id/boardtypes', (req, res) => {
+  let beachesId = parseInt(req.params.id);
+  let requestStatement = `
+SELECT beaches.name AS Beach, boardTypes.name AS BoardTypeName, boardTypes.oid
+FROM beaches JOIN beaches_boardTypes ON
+beaches.oid = beaches_boardTypes.beaches_id
+JOIN boardTypes ON
+beaches_boardTypes.boardTypes_id = boardTypes.oid
+WHERE beaches.oid = (?)
+`
+  database.all(requestStatement, [beachesId], (error, results) => {
+    if(error) {
+      console.log("couldn't get any boards for that beach", error);
+      res.sendStatus(500);
+    }
+    else {
+      console.log("success");
+      res.status(200).json(results);
+    }
+  });
+});
 
 
 
